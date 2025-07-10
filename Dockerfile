@@ -17,19 +17,14 @@ WORKDIR /home/hunyuan
 RUN python3 -m venv .venv
 ENV PATH="/home/hunyuan/.venv/bin:$PATH"
 
-# Instalar PyTorch 2.5.1 con CUDA 12.1 y dependencias principales
 RUN pip install --upgrade pip
-RUN pip install torch==2.5.1+cu121 torchvision==0.18.1+cu121 torchaudio==2.2.1 --extra-index-url https://download.pytorch.org/whl/cu121
-
-# Instalar Gradio y otras dependencias generales
-RUN pip install gradio==4.28.3 numpy pillow trimesh scikit-image
-
-#  Instalar dependencias específicas de Hunyuan y renderizadores
+# Instalar dependencias principales primero para aprovechar la cache de Docker y evitar reinstalar paquetes grandes
 COPY requirements.txt ./
+RUN pip install torch==2.3.1+cu121 torchvision==0.18.1+cu121 torchaudio==2.3.1+cu121 --extra-index-url https://download.pytorch.org/whl/cu121
 RUN pip install -r requirements.txt
-
-# Copiar scripts al contenedor
+# Copiar el resto del contexto del proyecto al contenedor (ahorra tiempo si requirements.txt no cambia)
 COPY --chown=hunyuan:hunyuan . .
+
 
 # Precompilar renderizadores diferenciales si es necesario
 RUN [ -f renderers/compile.sh ] && bash renderers/compile.sh || true
@@ -39,4 +34,4 @@ RUN [ -f custom_rasterizer/setup.py ] && cd custom_rasterizer && python setup.py
 EXPOSE 7860
 VOLUME ["/data"]
 
-ENTRYPOINT ["python3", "gradio_app.py"]
+ENTRYPOINT ["python3", "gradio_app.py", "--server.port=7860", "--server.address=0.0.0.0"]

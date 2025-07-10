@@ -182,14 +182,12 @@ demo_textured_roughness.jpg
 demo_untextured.glb
 white_mesh_remesh.obj
 hy3dpaint/ckpt/
-
-# Ignorar checkpoints y archivos grandes de modelos
+*.npz
 hunyuan3d-dit-v2-1/model.fp16.ckpt
 hunyuan3d-paint-v2-1/
 *.ckpt
 *.pth
 *.safetensors
-# Ignorar resultados temporales, cachés, salidas de runs previos y carpetas de salida
 save_dir/
 outputs/
 output/
@@ -208,28 +206,23 @@ __pycache__/
 *.webp
 *.svg
 *.ico
-# Ignorar entornos virtuales locales y dependencias no versionadas
 venv/
 .env/
 .venv/
-# Ignorar archivos de pruebas, logs, archivos swap
 *.log
 *.tmp
 *.swp
 *.bak
-# Ignorar archivos de configuración de entorno de desarrollo
 .idea/
 .vscode/
 .mypy_cache/
 .pylint.d/
 .coverage
 coverage.xml
-# Ignorar exportaciones y modelos generados por la app
 *.obj
 *.glb
 *.stl
 *.ply
-# Ignorar archivos de datasets generados o de ejemplo, si no querés subirlos
 assets/example_images/
 assets/env_maps/
 assets/qrcode/

@@ -16,8 +16,9 @@ services:
               count: all
               capabilities: [gpu]
     volumes:
+      - ./hunyuan3d-dit-v2-1:/home/hunyuan/hunyuan3d-dit-v2-1:ro
       - ./data:/data
     ports:
       - "7860:7860"
-    shm_size: 16g   # Recomendada para modelos grandes
+    shm_size: 16g  
     restart: unless-stopped
