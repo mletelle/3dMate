@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+  hunyuan3d:
+    build: .
+    image: hunyuan3d:2.1
+    container_name: hunyuan3d-gui
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    volumes:
+      - ./data:/data
+    ports:
+      - "7860:7860"
+    shm_size: 16g   # Recomendada para modelos grandes
+    restart: unless-stopped
