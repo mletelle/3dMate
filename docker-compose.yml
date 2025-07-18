@@ -18,6 +18,7 @@ services:
     volumes:
       - ./hunyuan3d-dit-v2-1:/home/hunyuan/hunyuan3d-dit-v2-1:ro
       - ./data:/data
+      - ./models:/models
     ports:
       - "7860:7860"
     shm_size: 16g  
